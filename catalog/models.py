@@ -10,7 +10,6 @@ class Product(models.Model):
     image = models.ImageField(verbose_name='изображение', **NULLABLE)
     category = models.ForeignKey('Category', on_delete=models.CASCADE)
     salary = models.IntegerField(verbose_name='цена', **NULLABLE)
-    manufactured_at = models.DateTimeField(verbose_name='дата производства', default="")
     created_at = models.DateTimeField(verbose_name='дата создания записи в БД')
     updated_at = models.DateTimeField(verbose_name='дата последнего изменения записи в БД')
 
