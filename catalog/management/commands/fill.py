@@ -7,21 +7,29 @@ from catalog.models import Category, Product
 
 
 class Command(BaseCommand):
+    """Класс для создания команды, наследуемый от базового класса BaseCommand."""
 
     @staticmethod
     def json_read():
+        """Статический метод для считывания данных из .json файла."""
         with open(os.path.join('catalog_data.json'), 'r', encoding='utf-16') as f:
             data_file = json.load(f)
             return data_file
 
     def handle(self, *args, **kwargs):
+        """
+        Обязательный метод для реализации команды.
+        Команда умеет заполнять базу данных,
+        при этом предварительно зачищая ее от старых данных.
+        """
         product_for_create = []
         category_for_create = []
 
         for category in Command.json_read():
             if category['model'] == "catalog.category":
                 category_for_create.append(
-                    Category(pk=category['pk'], name=category['fields']['name'], description=category['fields']['description'])
+                    Category(pk=category['pk'], name=category['fields']['name'],
+                             description=category['fields']['description'])
                 )
         Category.objects.all().delete()
         Category.objects.bulk_create(category_for_create)

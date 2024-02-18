@@ -3,7 +3,8 @@
 {% load my_tags %}
 {% block content %}
 <div class="card" style="width: 18rem;">
-    <img src="{{ object.image | my_media }}" class="card-img-top" alt="{% static '/images/product_plug.png' %}">
+    <img src="{{ object.image | my_media }}" onError="this.src= '/static/images/product_plug.png'"
+    class="card-img-top" alt="">
     <div class="card-body">
         <h4 class="card-title">{{ object.name }}</h4>
         <h5 class="card-title">Цена: {{object.price}}</h5>

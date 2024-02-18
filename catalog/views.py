@@ -3,6 +3,7 @@ from catalog.models import Category, Product
 
 
 def categories(request):
+    """Метод показывает на главной странице все категории продуктов."""
     context = {
         'object_list': Category.objects.all(),
         'title': 'SkyStore - Главная'
@@ -11,6 +12,10 @@ def categories(request):
 
 
 def contacts(request):
+    """
+    Метод возвращает страницу с контактами
+    и показывает в консоли, введенные данные в форму.
+    """
     if request.method == 'POST':
         name = request.POST.get('name')
         phone = request.POST.get('phone')
@@ -20,6 +25,7 @@ def contacts(request):
 
 
 def category(request):
+    """Метод возвращает страницу с категориями продуктов."""
     context = {
         'object_list': Category.objects.all(),
         'title': 'Все категории продуктов'
@@ -28,6 +34,7 @@ def category(request):
 
 
 def product_info(request, pk):
+    """Метод возвращает страницу со всеми продуктами определенной категории продуктов."""
     category_item = Category.objects.get(pk=pk)
     context = {
         'object_list': Product.objects.filter(category_id=pk),
@@ -37,6 +44,10 @@ def product_info(request, pk):
 
 
 def product_details(request, pk):
+    """
+    Метод возвращает страницу с информацией по продукту.
+    Название продукта, цену, описание, фотографию.
+    """
     product = get_object_or_404(Product, pk=pk)
     context = {
         'object': product
