@@ -1,55 +1,28 @@
-from django.shortcuts import render, get_object_or_404
+from django.views.generic import ListView, DetailView, TemplateView
+
 from catalog.models import Category, Product
 
 
-def categories(request):
-    """Метод показывает на главной странице все категории продуктов."""
-    context = {
-        'object_list': Category.objects.all(),
-        'title': 'SkyStore - Главная'
-    }
-    return render(request, 'catalog/categories.html', context)
+class CategoriesListView(ListView):
+    """Класс для вывода всех категорий продуктов"""
+    model = Category
 
 
-def contacts(request):
-    """
-    Метод возвращает страницу с контактами
-    и показывает в консоли, введенные данные в форму.
-    """
-    if request.method == 'POST':
-        name = request.POST.get('name')
-        phone = request.POST.get('phone')
-        message = request.POST.get('message')
-        print(f'{name} {phone} {message}')
-    return render(request, 'catalog/contacts.html')
+class ContactsView(TemplateView):
+    """Класс для вывода страницы с контактами"""
+    template_name = 'catalog/contacts.html'
 
 
-def category(request):
-    """Метод возвращает страницу с категориями продуктов."""
-    context = {
-        'object_list': Category.objects.all(),
-        'title': 'Все категории продуктов'
-    }
-    return render(request, 'catalog/category.html', context)
+class ProductListView(ListView):
+    """Класс для вывода всех продуктов определенной категории"""
+    model = Product
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        queryset = queryset.filter(category_id=self.kwargs.get('pk'))
+        return queryset
 
 
-def product_info(request, pk):
-    """Метод возвращает страницу со всеми продуктами определенной категории продуктов."""
-    category_item = Category.objects.get(pk=pk)
-    context = {
-        'object_list': Product.objects.filter(category_id=pk),
-        'title': f'Все продукты категории "{category_item}"'
-    }
-    return render(request, 'catalog/product_info.html', context)
-
-
-def product_details(request, pk):
-    """
-    Метод возвращает страницу с информацией по продукту.
-    Название продукта, цену, описание, фотографию.
-    """
-    product = get_object_or_404(Product, pk=pk)
-    context = {
-        'object': product
-    }
-    return render(request, 'catalog/product_details.html', context)
+class ProductDetailView(DetailView):
+    """Класс для вывода информации о продукте по его pk"""
+    model = Product

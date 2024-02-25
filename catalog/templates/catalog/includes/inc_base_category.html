@@ -4,7 +4,7 @@
             <h4 class="my-0 font-weight-normal">{{ object.name }}</h4>
         </div>
         <div class="card-body">
-            <a href="{% url 'catalog:product_info' object.pk %}" type="button" class="btn btn-lg btn-block btn-outline-primary">Перейти</a>
+            <a href="{% url 'catalog:list_of_category_products' object.pk %}" type="button" class="btn btn-lg btn-block btn-outline-primary">Перейти</a>
         </div>
     </div>
 </div>
