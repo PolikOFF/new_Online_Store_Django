@@ -1,0 +1,20 @@
+{% extends 'catalog/base.html' %}
+{% load static %}
+{% load my_tags %}
+{% block content %}
+<div class="card" style="width: 18rem;">
+    <img src="{{ object.image | my_media }}"
+         class="card-img-top" alt="">
+    <div class="card-body">
+        <h4 class="card-title">{{ object.title }}</h4>
+        <h5 class="card-title">Slug: {{object.slug}}</h5>
+        {% if object.is_published %}
+        <h5 class="card-title">Опубликовано</h5>
+        {% else %}
+        <h5 class="card-title">Не опубликовано</h5>
+        {% endif %}
+        <h5 class="card-title"> Количество просмотров: {{object.view_count}}</h5>
+        <p class="card-text">{{ object.content }}</p>
+    </div>
+</div>
+{% endblock content %}
