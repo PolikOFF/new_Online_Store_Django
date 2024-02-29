@@ -19,7 +19,7 @@ class Blog(models.Model):
     create_at = models.DateField('дата создания', **NULLABLE)
     view_count = models.IntegerField(default=0, verbose_name='счетчик просмотров', **NULLABLE)
     is_published = models.BooleanField(default=True, verbose_name='признак публикации')
-    image = models.ImageField(verbose_name='изображение превью', **NULLABLE)
+    image = models.ImageField(upload_to='static/images', verbose_name='изображение превью', **NULLABLE)
     slug = models.CharField(max_length=150, verbose_name='slug', **NULLABLE)
 
     def __str__(self):
