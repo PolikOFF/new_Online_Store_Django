@@ -20,8 +20,8 @@ class Product(models.Model):
     image = models.ImageField(verbose_name='изображение', **NULLABLE)
     category = models.ForeignKey('Category', on_delete=models.CASCADE)
     price = models.IntegerField(verbose_name='цена', **NULLABLE)
-    created_at = models.DateTimeField(verbose_name='дата создания записи в БД')
-    updated_at = models.DateTimeField(verbose_name='дата последнего изменения записи в БД')
+    created_at = models.DateTimeField(verbose_name='дата создания записи в БД', **NULLABLE)
+    updated_at = models.DateTimeField(verbose_name='дата последнего изменения записи в БД', **NULLABLE)
 
     def __str__(self):
         return f"{self.name} ({self.category})"
@@ -46,3 +46,18 @@ class Category(models.Model):
     class Meta:
         verbose_name = 'категория'
         verbose_name_plural = 'категории'
+
+
+class Version(models.Model):
+    """Модель для версии продукта"""
+    product = models.ForeignKey('Product', on_delete=models.CASCADE)
+    version_number = models.IntegerField(verbose_name='номер версии')
+    version_name = models.CharField(max_length=100, verbose_name='имя версии')
+    is_current = models.BooleanField(verbose_name='текущая версия')
+
+    def __str__(self):
+        return f'Продукт - {self.product}, версия - {self.version_name}'
+
+    class Meta:
+        verbose_name = 'Версия'
+        verbose_name_plural = 'Версии'
