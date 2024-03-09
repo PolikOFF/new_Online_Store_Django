@@ -2,7 +2,7 @@
 {% load my_tags %}
 {% block content %}
 <div class="card" style="width: 18rem;" >
-    <img src="{{ object.image | my_media }}" onError="this.src= '/static/images/plug_blog.png'" class="card-img-top" alt="photo">
+    <img src="{{ object.image | my_media }}" class="card-img-top" alt="photo">
     <div class="card-body">
         <h4 class="card-title">{{ object.title }}</h4>
         <h5 class="card-title">Slug: {{object.slug}}</h5>

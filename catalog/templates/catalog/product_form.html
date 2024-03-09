@@ -1,9 +1,14 @@
 {% extends 'catalog/base.html' %}
 
 {% block content %}
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
+<form method="post" class="row">
+    <div class="col-6">
+        <div class="card">
+            <div class="card-body">
+                {% csrf_token %}
+                {{ form.as_p }}
+            </div>
+        </div>
         <button type="submit" class="btn btn-success">
             {% if object %}
             Сохранить
@@ -11,5 +16,19 @@
             Создать
             {% endif %}
         </button>
-    </form>
+    </div>
+    <div class="col-6">
+        <div class="card">
+            <div class="card-header">
+                Версия продукта
+            </div>
+            <div class="card-body">
+                {{ formset.management_form }}
+                {% for form in formset.forms %}
+                {{ form.as_p }}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</form>
 {% endblock %}

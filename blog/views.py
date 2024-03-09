@@ -51,18 +51,6 @@ class BlogDetailView(DetailView):
         self.object.save()
         return self.object
 
-    # def get(self, request, *args, **kwargs):
-    #     self.object = self.get_object()
-    #     self.object.view_count += 1
-    #     self.object.save()
-    #     context = self.get_context_data(object=self.object)
-    #     return self.render_to_response(context)
-
-    # def render_to_response(self, *args, **kwargs):
-    #     self.object.view_count = F('view_count') + 1
-    #     self.object.save()
-    #     return super().render_to_response(*args, **kwargs)
-
 
 class BlogDeleteView(DeleteView):
     model = Blog

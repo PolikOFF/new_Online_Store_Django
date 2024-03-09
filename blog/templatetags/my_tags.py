@@ -11,4 +11,4 @@ def my_media(value):
     """
     if value:
         return f'/media/{value}'
-    return '#'
+    return '/static/images/plug_blog.png'
