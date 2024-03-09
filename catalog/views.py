@@ -1,3 +1,4 @@
+from django.core.exceptions import ObjectDoesNotExist
 from django.forms import inlineformset_factory
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, TemplateView, CreateView, UpdateView, DeleteView
@@ -25,22 +26,31 @@ class ProductListView(ListView):
         queryset = queryset.filter(category_id=self.kwargs.get('pk'))
         return queryset
 
-    # def get_context_data(self, **kwargs):
-    #     context = super().get_context_data(**kwargs)
-    #
-    #     return context
+    def get_context_data(self, **kwargs):
+
+        context = super().get_context_data(**kwargs)
+        products = self.get_queryset()
+
+        for product in products:
+            product.versions = Version.objects.filter(product=product)
+            product.version = product.versions.filter(is_current=True).first()
+
+        return context
 
 
 class ProductDetailView(DetailView):
     """Класс для вывода информации о продукте по его pk"""
     model = Product
 
-    # def get_context_data(self, **kwargs):
-    #     context = super().get_context_data(**kwargs)
-    #     product = self.get_object()
-    #     context['versions'] = product.
-    #
-    #     return context
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        product = self.get_object()
+        versions = Version.objects.filter(product=product)
+        context['versions'] = versions
+        current_version = versions.filter(is_current=True).first()
+        context['current_version'] = current_version
+
+        return context
 
 
 class ProductCreateView(CreateView):

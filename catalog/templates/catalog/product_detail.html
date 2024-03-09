@@ -9,6 +9,7 @@
         <h4 class="card-title">{{ object.name }}</h4>
         <h5 class="card-title">Цена: {{object.price}}</h5>
         <p class="card-text">{{ object.description }}</p>
+        <p class="card-text">Текущая версия: {{ current_version.version_name }}</p>
     </div>
     <div class="card-body">
         <a href="{% url 'catalog:product_update' object.pk %}" type="button" class="btn btn-lg btn-block btn-outline-primary">Редактировать</a>
