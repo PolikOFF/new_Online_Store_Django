@@ -1,5 +1,7 @@
 from django import template
 
+from catalog.models import Version, Product
+
 register = template.Library()
 
 
@@ -12,3 +14,12 @@ def my_media(value):
     if value:
         return f'/media/{value}'
     return '/static/images/product_plug.png'
+
+
+@register.filter()
+def version(product):
+    versions = product.version_set
+    for version in versions:
+        if version.is_current:
+            return f'Активная версия - {version}.'
+        return f'У продукта отсутствуют версии.'

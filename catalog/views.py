@@ -26,16 +26,30 @@ class ProductListView(ListView):
         queryset = queryset.filter(category_id=self.kwargs.get('pk'))
         return queryset
 
-    def get_context_data(self, **kwargs):
+    # def get_context_data(self, **kwargs):
+    #
+    #     context = super().get_context_data(**kwargs)
+    #     products = self.get_queryset()
+    #
+    #     for product in products:
+    #         product.versions = Version.objects.filter(product=product)
+    #         product.version = product.versions.filter(is_current=True).first()
+    #
+    #     return context
 
-        context = super().get_context_data(**kwargs)
-        products = self.get_queryset()
-
-        for product in products:
-            product.versions = Version.objects.filter(product=product)
-            product.version = product.versions.filter(is_current=True).first()
-
-        return context
+    # def get_queryset(self):
+    #     queryset = super().get_queryset()
+    #     queryset = queryset.filter(category_id=self.kwargs.get('pk'))
+    #     return queryset
+    #
+    # def get_context_data(self, *args, **kwargs):
+    #     context_data = super().get_context_data(*args, **kwargs)
+    #     category_data = Category.objects.get(pk=self.kwargs.get('pk'))
+    #     context_data['category_pk'] = category_data.pk
+    #     context_data['title'] = f'{category_data.name}'
+    #     for product in context_data.get('object_list'):
+    #         product.version = product.version_set.filter(is_current=True).first()
+    #     return context_data
 
 
 class ProductDetailView(DetailView):
