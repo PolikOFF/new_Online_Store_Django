@@ -21,10 +21,10 @@ class ProductListView(ListView):
     """Класс для вывода всех продуктов определенной категории"""
     model = Product
 
-    def get_queryset(self):
-        queryset = super().get_queryset()
-        queryset = queryset.filter(category_id=self.kwargs.get('pk'))
-        return queryset
+    # def get_queryset(self):
+    #     queryset = super().get_queryset()
+    #     queryset = queryset.filter(category_id=self.kwargs.get('pk'))
+    #     return queryset
 
     # def get_context_data(self, **kwargs):
     #
@@ -37,19 +37,19 @@ class ProductListView(ListView):
     #
     #     return context
 
-    # def get_queryset(self):
-    #     queryset = super().get_queryset()
-    #     queryset = queryset.filter(category_id=self.kwargs.get('pk'))
-    #     return queryset
-    #
-    # def get_context_data(self, *args, **kwargs):
-    #     context_data = super().get_context_data(*args, **kwargs)
-    #     category_data = Category.objects.get(pk=self.kwargs.get('pk'))
-    #     context_data['category_pk'] = category_data.pk
-    #     context_data['title'] = f'{category_data.name}'
-    #     for product in context_data.get('object_list'):
-    #         product.version = product.version_set.filter(is_current=True).first()
-    #     return context_data
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        queryset = queryset.filter(category_id=self.kwargs.get('pk'))
+        return queryset
+
+    def get_context_data(self, *args, **kwargs):
+        context_data = super().get_context_data(*args, **kwargs)
+        category_data = Category.objects.get(pk=self.kwargs.get('pk'))
+        context_data['category_pk'] = category_data.pk
+        context_data['title'] = f'{category_data.name}'
+        for product in context_data.get('object_list'):
+            product.version = product.version_set.filter(is_current=True).first()
+        return context_data
 
 
 class ProductDetailView(DetailView):

@@ -1,7 +1,5 @@
 from django import template
 
-from catalog.models import Version, Product
-
 register = template.Library()
 
 
