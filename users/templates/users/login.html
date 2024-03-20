@@ -4,10 +4,17 @@
 <form method="post">
     <div class="col-6">
         <div class="card">
+            <div class="card-header">
+                <p>Вход в личный кабинет</p>
+            </div>
             <div class="card-body">
                 {% csrf_token %}
                 {{ form.as_p }}
                 <button type="submit" class="btn btn-success">Вход</button>
+            </div>
+            <div class="card-footer">
+                <p>Забыли пароль?</p>
+                <a href="{% url 'users:password_reset' %}" class="btn btn-secondary">Восстановить доступ</a>
             </div>
         </div>
     </div>

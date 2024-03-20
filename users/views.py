@@ -1,12 +1,16 @@
+import random
+import string
+
 from django.conf import settings
-from django.contrib.auth.views import LoginView as BaseLoginView
+from django.contrib.auth.views import LoginView as BaseLoginView, PasswordResetView, PasswordResetConfirmView
 from django.contrib.auth.views import LogoutView as BaseLogoutView
+from django.contrib.messages.views import SuccessMessageMixin
 from django.core.mail import send_mail
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse_lazy, reverse
 from django.views.generic import CreateView, UpdateView
 
-from users.forms import UserRegisterForm, UserForm
+from users.forms import UserRegisterForm, UserForm, UserForgotPasswordForm, UserSetNewPasswordForm
 from users.models import User
 
 import secrets
@@ -55,3 +59,31 @@ class UserUpdateView(UpdateView):
 
     def get_object(self, queryset=None):
         return self.request.user
+
+
+class UserForgotPasswordView(SuccessMessageMixin, PasswordResetView):
+
+    form_class = UserForgotPasswordForm
+    template_name = 'users/user_password_reset.html'
+    success_url = reverse_lazy('users:login')
+    success_message = 'Письмо с инструкцией по восстановлению доступа отправлена на ваш email'
+    subject_template_name = 'users/email/password_subject_reset_mail.txt'
+    email_template_name = 'users/email/password_reset_mail.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Запрос на восстановление пароля'
+        return context
+
+
+class UserPasswordResetConfirmView(SuccessMessageMixin, PasswordResetConfirmView):
+
+    form_class = UserSetNewPasswordForm
+    template_name = 'users/user_password_set_new.html'
+    success_url = reverse_lazy('users:login')
+    success_message = 'Пароль успешно изменен. Можете авторизоваться на сайте.'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Установить новый пароль'
+        return context

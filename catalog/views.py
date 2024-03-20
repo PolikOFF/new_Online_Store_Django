@@ -21,22 +21,6 @@ class ProductListView(ListView):
     """Класс для вывода всех продуктов определенной категории"""
     model = Product
 
-    # def get_queryset(self):
-    #     queryset = super().get_queryset()
-    #     queryset = queryset.filter(category_id=self.kwargs.get('pk'))
-    #     return queryset
-
-    # def get_context_data(self, **kwargs):
-    #
-    #     context = super().get_context_data(**kwargs)
-    #     products = self.get_queryset()
-    #
-    #     for product in products:
-    #         product.versions = Version.objects.filter(product=product)
-    #         product.version = product.versions.filter(is_current=True).first()
-    #
-    #     return context
-
     def get_queryset(self):
         queryset = super().get_queryset()
         queryset = queryset.filter(category_id=self.kwargs.get('pk'))
