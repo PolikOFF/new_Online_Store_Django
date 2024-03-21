@@ -135,6 +135,7 @@ MEDIA_ROOT = BASE_DIR / 'media'
 AUTH_USER_MODEL = 'users.User'
 LOGOUT_REDIRECT_URL = '/'
 LOGIN_REDIRECT_URL = '/'
+LOGIN_URL = '/users/'
 
 
 # APP_MAIL_PASSWORD = os.getenv('DJANGO_PASS_MAIL')
