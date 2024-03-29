@@ -6,11 +6,17 @@ from django.views.generic import ListView, DetailView, TemplateView, CreateView,
 
 from catalog.forms import ProductForm, VersionForm
 from catalog.models import Category, Product, Version
+from catalog.services import get_categories_from_cache
 
 
 class CategoriesListView(ListView):
     """Класс для вывода всех категорий продуктов"""
     model = Category
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        queryset = get_categories_from_cache()
+        return queryset
 
 
 class ContactsView(TemplateView):
