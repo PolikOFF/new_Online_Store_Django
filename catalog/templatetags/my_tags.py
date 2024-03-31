@@ -16,6 +16,7 @@ def my_media(value):
 
 @register.filter()
 def version(product):
+    """Шаблонный фильтр для отображения информации по версии продукта"""
     versions = product.version_set
     for version in versions:
         if version.is_current:
